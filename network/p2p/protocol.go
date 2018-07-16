@@ -321,7 +321,7 @@ func (hp *HpbProto) handleMsg(p *Peer) error {
 		log.Debug("handleMsg test send ...","peer",p.id, "Msg",msg.String(),"send err",err)
 		return nil
 	case msg.Code == HpbTestMsgResp:
-		log.Debug("handleMsg rest recv ...","peer",p.id, "Msg",msg.String())
+		log.Debug("handleMsg test recv ...","peer",p.id, "Msg",msg.String())
 		return nil
 
 	default:
