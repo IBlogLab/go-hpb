@@ -186,7 +186,7 @@ func (prm *PeerManager) randomTestBW() {
 		select {
 		case <-timeout.C:
 			rd :=rand.Intn(6)
-			timeout.Reset(time.Second*time.Duration(60+rd))
+			timeout.Reset(time.Second*time.Duration(60*10+rd))
 		}
 
 		//2 to test
