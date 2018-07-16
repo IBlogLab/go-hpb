@@ -32,6 +32,7 @@ import (
 	"github.com/hpb-project/go-hpb/config"
 	hpbinter "github.com/hpb-project/go-hpb/interface"
 	"github.com/hpb-project/go-hpb/event/sub"
+	"github.com/hpb-project/go-hpb/network/p2p"
 )
 
 var (
@@ -330,6 +331,11 @@ func (this *Syncer) Synchronising() bool {
 // used for fetching hashes and blocks from.
 func (this *Syncer) RegisterPeer(id string, version uint, peer Peer) error {
 	return this.strategy.registerPeer(id, version, peer)
+}
+func (this *Syncer) RegisterNetPeer(peer *p2p.Peer) error {
+	ps := &PeerSyn{peer}
+	ps.Log().Info("register network peer in syncer.")
+	return this.RegisterPeer(ps.GetID(), ps.GetVersion(), ps)
 }
 
 // RegisterLightPeer injects a light client peer, wrapping it so it appears as a regular peer.

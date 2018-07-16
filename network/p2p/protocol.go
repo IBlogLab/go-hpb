@@ -186,7 +186,7 @@ func (hp *HpbProto) handle(p *Peer) error {
 
 	if hp.onAddPeer != nil {
 		hp.onAddPeer(p)
-		p.log.Debug("has add peer to syncer")
+		p.log.Info("network has reg peer to syncer")
 	}
 	//defer hp.onDropPeer(p)
 

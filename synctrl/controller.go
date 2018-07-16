@@ -163,6 +163,8 @@ func NewSynCtrl(cfg *config.ChainConfig, mode config.SyncMode, txpool *txpool.Tx
 	p2p.PeerMgrInst().RegMsgProcess(p2p.NewBlockMsg, HandleNewBlockMsg)
 	p2p.PeerMgrInst().RegMsgProcess(p2p.TxMsg, HandleTxMsg)
 
+	p2p.PeerMgrInst().RegOnAddPeer(synctrl.syner.RegisterNetPeer)
+
 	return synctrl, nil
 }
 
