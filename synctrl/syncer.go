@@ -350,6 +350,11 @@ func (this *Syncer) UnregisterPeer(id string) error {
 	return this.strategy.unregisterPeer(id)
 }
 
+func (this *Syncer) UnregisterNetPeer(peer *p2p.Peer) error {
+	peer.Log().Info("register network peer in syncer.")
+	return this.UnregisterPeer(peer.GetID())
+}
+
 // Cancel cancels all of the operations and resets the scheduler. It returns true
 // if the cancel operation was completed.
 func (this *Syncer) Cancel() {

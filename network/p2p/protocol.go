@@ -185,16 +185,16 @@ func (hp *HpbProto) handle(p *Peer) error {
 	if hp.onAddPeer != nil {
 		hp.onAddPeer(p)
 		p.log.Info("network has reg peer to syncer")
-	} else{
-		p.log.Info("network has no reg peer to syncer")
 	}
-
-	//defer hp.onDropPeer(p)
 
 	// main loop. handle incoming messages.
 	for {
 		if err := hp.handleMsg(p); err != nil {
 			p.Log().Debug("Message handling failed", "err", err)
+			if hp.onDropPeer != nil {
+				hp.onDropPeer(p)
+				p.log.Info("network has drop peer to syncer")
+			}
 			return err
 		}
 	}
@@ -238,14 +238,14 @@ func (hp *HpbProto) handleMsg(p *Peer) error {
 	case msg.Code == ReqNodesMsg:
 		if cb := hp.msgProcess[ReqNodesMsg]; cb != nil{
 			cb(p,msg)
-			log.Info("ReqNodesMsg callback ok")
+			//log.Info("ReqNodesMsg callback ok")
 		}
 		//HandleReqNodesMsg(p,msg)
 		return nil
 	case msg.Code == ResNodesMsg:
 		if cb := hp.msgProcess[ResNodesMsg]; cb != nil{
 			cb(p,msg)
-			log.Info("ResNodesMsg callback ok")
+			//log.Info("ResNodesMsg callback ok")
 		}
 		//HandleResNodesMsg(p,msg)
 		return nil

@@ -357,11 +357,11 @@ func (prm *PeerManager) RegOnAddPeer(cb OnAddPeerCB) {
 	return
 }
 
-//func (prm *PeerManager) RegOnDropPeer(cb OnDropPeerCB) {
-//	prm.hpbpro.regOnDropPeer(cb)
-//	log.Debug("OnDropPeer has been register")
-//	return
-//}
+func (prm *PeerManager) RegOnDropPeer(cb OnDropPeerCB) {
+	prm.hpbpro.regOnDropPeer(cb)
+	log.Debug("OnDropPeer has been register")
+	return
+}
 
 
 const  bindInfoFileName  = "binding.json"
