@@ -415,6 +415,7 @@ func (this *SynCtrl) removePeer(id string) {
 	}
 	// Hard disconnect at the networking layer
 	if peer != nil {
+		log.Info("######SYN DO REMOVER PEER")
 		peer.Disconnect(p2p.DiscUselessPeer)
 	}
 }

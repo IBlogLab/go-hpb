@@ -231,11 +231,12 @@ func New(conf  *config.HpbConfig) (*Node, error){
 		hpbnode.Hpbtxpool = hpbtxpool
 
 		hpbnode.worker = worker.New(&conf.BlockChain, hpbnode.EventMux(), hpbnode.Hpbengine)
-		syncctr, err     := synctrl.NewSynCtrl(&conf.BlockChain, config.SyncMode(conf.Node.SyncMode), hpbtxpool, hpbnode.Hpbengine)
-		if err != nil {
-			log.Error("crete synctrl object error")
-			return nil, err
-		}
+		//syncctr, err     := synctrl.NewSynCtrl(&conf.BlockChain, config.SyncMode(conf.Node.SyncMode), hpbtxpool, hpbnode.Hpbengine)
+		syncctr := synctrl.InstanceSynCtrl()
+		//if err != nil {
+		//	log.Error("crete synctrl object error")
+		//	return nil, err
+		//}
 		hpbnode.Hpbsyncctr = syncctr
 
 		// Rewind the chain in case of an incompatible config upgrade.
