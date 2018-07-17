@@ -37,6 +37,7 @@ var (
 	errClosed            = errors.New("peer set is closed")
 	errAlreadyRegistered = errors.New("peer is already registered")
 	errNotRegistered     = errors.New("peer is not registered")
+	errBootRegistered    = errors.New("peer with boot node is not allowed registered")
 	errIncomplete        = errors.New("PeerManager is incomplete creation")
 )
 
@@ -110,7 +111,7 @@ func (prm *PeerManager)Start() error {
 	copy(prm.server.Protocols, prm.hpbpro.Protocols())
 
 
-	prm.server.localType = discover.InitNode
+	prm.server.localType = discover.PreNode
 	if config.Network.RoleType == "bootnode" {
 		prm.server.localType = discover.BootNode
 		//input cid&hib from json
@@ -224,6 +225,10 @@ func (prm *PeerManager) Register(p *Peer) error {
 
 	if prm.closed {
 		return errClosed
+	}
+	if p.remoteType == discover.BootNode{
+		log.Debug("peer with bootnode is not allowed to register")
+		return nil
 	}
 	if _, ok := prm.peers[p.id]; ok {
 		return errAlreadyRegistered

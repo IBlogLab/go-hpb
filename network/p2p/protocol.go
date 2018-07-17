@@ -182,7 +182,7 @@ func (hp *HpbProto) handle(p *Peer) error {
 	defer hp.removePeer(p.id)
 
 	//&& p.remoteType!=discover.BootNode && p.localType!=discover.BootNode
-	if hp.onAddPeer != nil {
+	if p.remoteType != discover.BootNode  && hp.onAddPeer != nil{
 		hp.onAddPeer(p)
 		p.log.Info("network has reg peer to syncer")
 	}
@@ -191,7 +191,7 @@ func (hp *HpbProto) handle(p *Peer) error {
 	for {
 		if err := hp.handleMsg(p); err != nil {
 			p.Log().Debug("Message handling failed", "err", err)
-			if hp.onDropPeer != nil {
+			if p.remoteType != discover.BootNode && hp.onDropPeer != nil {
 				hp.onDropPeer(p)
 				p.log.Info("network has drop peer to syncer")
 			}
@@ -328,12 +328,12 @@ func (hp *HpbProto) handleMsg(p *Peer) error {
 		return nil
 
 	case msg.Code == HpbTestMsg:
-		data :=[] byte {0x4C,0x51,0x48}
-		err := p.SendData(HpbTestMsgResp,data)
-		log.Info("handleMsg test send ...","peer",p.id, "Msg",msg.String(),"send err",err)
+		//data :=[] byte {0x4C,0x51,0x48}
+		//err := p.SendData(HpbTestMsgResp,data)
+		//log.Info("handleMsg test send ...","peer",p.id, "Msg",msg.String(),"send err",err)
 		return nil
 	case msg.Code == HpbTestMsgResp:
-		log.Info("handleMsg test recv ...","peer",p.id, "Msg",msg.String())
+		//log.Info("handleMsg test recv ...","peer",p.id, "Msg",msg.String())
 		return nil
 
 	default:

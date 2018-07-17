@@ -205,13 +205,10 @@ func (this *SynCtrl) Start() {
 func (this *SynCtrl) minedRoutingLoop() {
 	// automatically stops if unsubscribe
 	for obj := range this.minedBlockSub.Chan() {
-		log.Info("######minedRouting1")
 		switch ev := obj.Data.(type) {
 		case bc.NewMinedBlockEvent:
-			log.Info("######minedRouting2")
 			this.routingBlock(ev.Block, true)  // First propagate block to peers
 			this.routingBlock(ev.Block, false) // Only then announce to the rest
-			log.Info("######minedRouting3")
 		}
 	}
 }
