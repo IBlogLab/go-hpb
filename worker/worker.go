@@ -327,7 +327,8 @@ func (self *worker) handlerSelfMinedBlock() {
 				mustCommitNewWork = false
 			}
 			// Broadcast the block and announce chain insertion event
-			self.mux.Post(bc.NewMinedBlockEvent{Block: block})
+			errr := self.mux.Post(bc.NewMinedBlockEvent{Block: block})
+			log.Info("worker has sent new block event.","err",errr)
 			var (
 				events []interface{}
 				logs   = work.state.Logs()
